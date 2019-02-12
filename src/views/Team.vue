@@ -1,18 +1,27 @@
 <template>
   <div class="team">
     <h1 class="subheading grey--text">Team</h1>
-    <v-container>
-      <v-layout row wrap>
-        <v-flex xs2 v-for="it in [1,2,3,3,4,5,6,7,8,9,10,11,12]" :key="it">
-          <v-btn outline block class="primary">{{it}}</v-btn>
-        </v-flex>
-      </v-layout>
+    <v-container class="my-5">
+      <v-card>
+
+      </v-card>
     </v-container>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+       team: [
+        { name: 'The Net Ninja', role: 'Web developer' },
+        { name: 'Ryu', role: 'Graphic designer' },
+        { name: 'Chun Li', role: 'Web developer' },
+        { name: 'Gouken', role: 'Social media maverick' },
+        { name: 'Yoshi', role: 'Sales guru'}
+      ]
+    }
+  },
   name: "team"
 };
 </script>
