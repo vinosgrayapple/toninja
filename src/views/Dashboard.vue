@@ -11,7 +11,7 @@
         </v-btn>
         <span>Sort project by project name</span>
         </v-tooltip>
-        <v-tooltip right="">
+        <v-tooltip right>
         <v-btn small flat color="grey" @click="sortBy('person')" slot="activator">
           <v-icon>person</v-icon>
           <span class="caption text-lowercase">by person</span>
