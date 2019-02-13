@@ -24,7 +24,7 @@
       </v-btn>
     </v-toolbar>
 
-    <v-navigation-drawer app absolute v-model="drawer">
+    <v-navigation-drawer app absolute temporary v-model="drawer">
       <v-layout align-center justify-center column>
         <v-flex class="mt-5">
           <v-avatar size="100">
