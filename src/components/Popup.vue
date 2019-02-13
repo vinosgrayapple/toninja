@@ -37,7 +37,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat class="success mx-0 mt-3" @click="submit">Add project</v-btn>
+            <v-btn flat class="success mx-0 mt-3" @click="submit" :loading="loading">Add project</v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -58,12 +58,14 @@ export default {
       content: "",
       date: new Date().toISOString().substr(0, 10),
       menu: false,
-      inputRules: [v => v.length >= 3 || "Text must be more 3 characters"]
+      inputRules: [v => v.length >= 3 || "Text must be more 3 characters"],
+      loading: false
     };
   },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        this.loading = true;
         const project = {
           title: this.title,
           content: this.content,
@@ -71,11 +73,13 @@ export default {
           person: "vinos",
           status: "ongoing"
         };
-        console.log(project);
         db.collection("projects")
           .add(project)
-          .then(() => console.log("added to db"));
-        this.dialog = false;
+          .then(() => {
+            this.loading = false;
+            this.$refs.form.reset();
+            this.dialog = false;
+          });
       }
     }
   },
@@ -85,7 +89,8 @@ export default {
         ? format(this.date, "DD MMMM YYYY", { locale: ru })
         : format(new Date(), "DD MMMM YYYY", { locale: ru });
     }
-  }
+  },
+  watch: {}
 };
 </script>
 
