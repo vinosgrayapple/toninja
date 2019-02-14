@@ -80,6 +80,7 @@ export default {
             this.$refs.form.reset();
             this.dialog = false;
           });
+        this.$emit("projectAdded");
       }
     }
   },

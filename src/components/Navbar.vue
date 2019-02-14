@@ -1,5 +1,9 @@
 <template>
   <nav>
+    <v-snackbar v-model="snackbar" top>
+      <span>Прекрасно! Вы добавили новый проект!</span>
+      <v-btn flat color="white" class="orange--text" @click="snackbar=false">Close</v-btn>
+    </v-snackbar>
     <v-toolbar flat app>
       <v-toolbar-side-icon class="grey--text" @click="drawer=!drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase grey--text">
@@ -35,7 +39,7 @@
           <p class="purple--text subheading mt-1">Сергей Комаричев</p>
         </v-flex>
         <v-flex class="mt-4 mb-4">
-          <Popup/>
+          <Popup @projectAdded="snackbar=true"/>
         </v-flex>
       </v-layout>
       <v-list>
@@ -58,6 +62,7 @@ export default {
   mounted() {},
   data() {
     return {
+      snackbar: false,
       drawer: false,
       links: [
         { icon: "dashboard", text: "Dashboard", route: "/" },
