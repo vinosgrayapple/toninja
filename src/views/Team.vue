@@ -39,31 +39,31 @@ export default {
           name: "The Net Ninja",
           role: "Web developer",
           email: "ninja@artwinery.com.ua",
-          avatar: "/avatar-1.png"
+          avatar: "img/avatar-1.png"
         },
         {
           name: "Ryu",
           role: "Graphic designer",
           email: "raya@artwinery.com.ua",
-          avatar: "/avatar-2.png"
+          avatar: "img/avatar-2.png"
         },
         {
           name: "Chun Li",
           role: "Web developer",
           email: "chuck@artwinery.com.ua",
-          avatar: "/avatar-3.png"
+          avatar: "img/avatar-3.png"
         },
         {
           name: "Gouken",
           role: "Social media maverick",
           email: "gouken@artwinery.com.ua",
-          avatar: "/avatar-4.png"
+          avatar: "img/avatar-4.png"
         },
         {
           name: "Yoshi",
           role: "Sales guru",
           email: "yoshi@artwinery.com.ua",
-          avatar: "/avatar-5.png"
+          avatar: "img/avatar-5.png"
         }
       ]
     };

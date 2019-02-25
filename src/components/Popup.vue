@@ -1,15 +1,46 @@
 <template>
   <v-dialog max-width="600px" v-model="dialog">
-    <v-btn flat slot="activator" class="success">Add New Project</v-btn>
+    <v-btn flat slot="activator" class="success">Добавить работника</v-btn>
     <v-card>
       <v-card-title>
-        <h2>Add a New Project</h2>
+        <h2>Добавить нового работника</h2>
       </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="form">
-          <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field>
-          <v-textarea label="Information" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>
+          <v-text-field label="Имя" v-model="name" prepend-icon="account_box" :rules="inputRules"></v-text-field>
+          <v-text-field
+            label="Фамилия"
+            v-model="lastname"
+            prepend-icon="account_circle"
+            :rules="inputRules"
+          ></v-text-field>
+          <v-text-field
+            v-model="email"
+            prepend-icon="email"
+            :rules="[rules.required, rules.email]"
+            label="E-mail"
+          ></v-text-field>
+          <v-autocomplete
+            ref="unit"
+            v-model="unit"
+            :rules="[() => !!unit || 'Сделайте Выбор!']"
+            :items="units"
+            label="Подразделение"
+            prepend-icon="add_comment"
+            required
+          ></v-autocomplete>
+          <v-autocomplete
+            ref="department"
+            v-model="department"
+            :rules="[() => !!department || 'Сделайте Выбор!']"
+            :items="departments[unit]"
+            label="Департамент"
+            prepend-icon="add_comment"
+            required
+          ></v-autocomplete>
 
+          <!-- department -->
+          <!-- <v-textarea label="Information" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea> -->
           <v-menu
             ref="menu"
             v-model="menu"
@@ -22,7 +53,7 @@
             <v-text-field
               :value="formatteDate"
               slot="activator"
-              label="Due date"
+              label="День рождения"
               prepend-icon="date_range"
               readonly
               :rules="inputRules"
@@ -37,7 +68,12 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat class="success mx-0 mt-3" @click="submit" :loading="loading">Add project</v-btn>
+            <v-btn
+              flat
+              class="success mx-0 mt-3"
+              @click="submit"
+              :loading="loading"
+            >Добавить Работника</v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -54,7 +90,65 @@ export default {
   data() {
     return {
       dialog: false,
-      title: "",
+      unit: "",
+      department:'',
+      departments: {
+        "Производственный цех": [
+          "Виноматериальный",
+          "Ликерный",
+          "Тиражный",
+          "Послетиражная выдержка",
+          "Рядовая отделка",
+          "Экспортная отделка",
+          "Игристые вина",
+          "Шампанизация"
+        ],
+        Вспомогательное: [
+          "Материальный склад",
+          "Медпункт",
+          "Механическое отделение",
+          "Микробиология",
+          "Отдел автоматизации",
+          "Отдел технического контроля",
+          "Лаборатория",
+          "ОМТСиТЛ",
+          "Тарно-транспортное",
+          "Энергоупровление",
+          "ИТ",
+          "РСУ"
+        ],
+        Административное: [
+          'Менеджмент',
+          'Главный технолог',
+          'ФЭБ',
+          'Бухгалтерия',
+          'ОИСМ',
+          'Отдел кадров',
+          'ПЭО',
+          'Специалисты',
+          'Юротдел'
+        ],
+        Сбытовое: [],
+        Прочие: []
+      },
+      units: [
+        "Производственный цех",
+        "Вспомогательное",
+        "Административное",
+        "Сбытовое",
+        "Прочие"
+      ],
+      name: "",
+      email: "",
+      rules: {
+        required: value => !!value || "Required.",
+        counter: value => value.length <= 20 || "Max 20 characters",
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Invalid e-mail.";
+        }
+      },
+      lastname: "",
       content: "",
       date: new Date().toISOString().substr(0, 10),
       menu: false,
