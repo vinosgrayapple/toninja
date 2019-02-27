@@ -32,7 +32,7 @@
       <v-layout align-center justify-center column>
         <v-flex class="mt-5">
           <v-avatar size="100">
-            <img src="/avatar-1.png" alt="My photo">
+            <img src="img/avatar-1.png" alt="My photo">
           </v-avatar>
         </v-flex>
         <v-flex>

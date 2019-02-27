@@ -14,6 +14,28 @@
             prepend-icon="account_circle"
             :rules="inputRules"
           ></v-text-field>
+          <!-- Load Photo -->
+          <v-layout>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-img :src="imageUrl" max-height="150" contain></v-img>
+            </v-flex>
+          </v-layout>
+          <v-btn
+            raised
+            class="primary"
+            prepend-icon="account_circle"
+            @click="onPickFile"
+            block
+          >Загрузка Фото</v-btn>
+          <input
+            type="file"
+            style="display:none"
+            ref="fileInput"
+            accept="image/*"
+            @change="onFilePicked"
+          >
+
+          <!-- Load email -->
           <v-text-field
             v-model="email"
             prepend-icon="email"
@@ -89,9 +111,11 @@ const ru = require("date-fns/locale/ru");
 export default {
   data() {
     return {
+      imageUrl: "",
+      image: null,
       dialog: false,
       unit: "",
-      department:'',
+      department: "",
       departments: {
         "Производственный цех": [
           "Виноматериальный",
@@ -118,20 +142,21 @@ export default {
           "РСУ"
         ],
         Административное: [
-          'Менеджмент',
-          'Главный технолог',
-          'ФЭБ',
-          'Бухгалтерия',
-          'ОИСМ',
-          'Отдел кадров',
-          'ПЭО',
-          'Специалисты',
-          'Юротдел'
+          "Менеджмент",
+          "Главный технолог",
+          "ФЭБ",
+          "Бухгалтерия",
+          "ОИСМ",
+          "Отдел кадров",
+          "ПЭО",
+          "Специалисты",
+          "Юротдел"
         ],
         Сбытовое: [],
         Прочие: []
       },
       units: [
+        "  ",
         "Производственный цех",
         "Вспомогательное",
         "Административное",
@@ -157,6 +182,23 @@ export default {
     };
   },
   methods: {
+    onPickFile() {
+      this.$refs.fileInput.click();
+    },
+    onFilePicked(event) {
+      const files = event.target.files;
+      // console.log(files);
+      let filename = files[0].name;
+      if (!filename.includes(".")) {
+        return alert("Please add a valid file");
+      }
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        this.imageUrl = fileReader.result;
+      });
+      fileReader.readAsDataURL(files[0]);
+      this.iamge = files[0];
+    },
     submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
